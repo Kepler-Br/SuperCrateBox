@@ -1,0 +1,132 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://sprites/player/spr_player_idle_1.png" type="Texture" id=1]
+[ext_resource path="res://sprites/player/spr_player_idle_2.png" type="Texture" id=2]
+[ext_resource path="res://sprites/player/spr_player_idle_3.png" type="Texture" id=3]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=4]
+[ext_resource path="res://sprites/player/spr_player_idle_0.png" type="Texture" id=5]
+[ext_resource path="res://sprites/player/spr_player_0.png" type="Texture" id=6]
+[ext_resource path="res://sprites/player/spr_jump_0.png" type="Texture" id=7]
+[ext_resource path="res://sprites/player/spr_jump_3.png" type="Texture" id=8]
+[ext_resource path="res://sprites/player/spr_player_1.png" type="Texture" id=9]
+[ext_resource path="res://sprites/player/spr_jump_1.png" type="Texture" id=10]
+[ext_resource path="res://sprites/player/spr_player_2.png" type="Texture" id=11]
+[ext_resource path="res://sprites/player/spr_player_3.png" type="Texture" id=12]
+[ext_resource path="res://tilesets/tileset-level1.res" type="TileSet" id=13]
+[ext_resource path="res://sprites/player/spr_player_4.png" type="Texture" id=14]
+[ext_resource path="res://prefabs/Fire.tscn" type="PackedScene" id=15]
+[ext_resource path="res://prefabs/EnemySmall.scn" type="PackedScene" id=16]
+[ext_resource path="res://prefabs/EnemyBig.tscn" type="PackedScene" id=17]
+[ext_resource path="res://prefabs/Crate.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scripts/game.gd" type="Script" id=19]
+[ext_resource path="res://sprites/player/spr_jump_2.png" type="Texture" id=20]
+[ext_resource path="res://prefabs/CrateSpawner.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scripts/CrateMasterSpawner.gd" type="Script" id=22]
+[ext_resource path="res://scripts/MonsterSpawner.gd" type="Script" id=23]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "idle",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 20 ) ],
+"loop": true,
+"name": "jump",
+"speed": 8.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 15.9869, 11.0629 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 19 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 224, 96 )
+collision_mask = 14
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+frames = SubResource( 1 )
+animation = "idle"
+frame = 3
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, 5 )
+shape = SubResource( 2 )
+
+[node name="EnemySmall" parent="." instance=ExtResource( 16 )]
+
+[node name="EnemyBig" parent="." instance=ExtResource( 17 )]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 511.474, 288.69 )
+scale = Vector2( 5, 5 )
+current = true
+
+[node name="Fire" parent="." instance=ExtResource( 15 )]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 13 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 8
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( -65536, 0, 1, -65535, 0, 131072, -65506, 0, 131072, -65505, 0, 1, 0, 0, 1, 1, 0, 131073, 2, 0, 65536, 3, 0, 65536, 4, 0, 65536, 5, 0, 65536, 6, 0, 65536, 7, 0, 65536, 8, 0, 65536, 9, 0, 65536, 10, 0, 65536, 11, 0, 65536, 12, 0, 65536, 13, 0, 65536, 18, 0, 65536, 19, 0, 65536, 20, 0, 65536, 21, 0, 65536, 22, 0, 65536, 23, 0, 65536, 24, 0, 65536, 25, 0, 65536, 26, 0, 65536, 27, 0, 65536, 28, 0, 65536, 29, 0, 65536, 30, 0, 131073, 31, 0, 1, 65536, 0, 1, 65537, 0, 131072, 65566, 0, 131072, 65567, 0, 1, 131072, 0, 1, 131073, 0, 131072, 131102, 0, 131072, 131103, 0, 1, 196608, 0, 1, 196609, 0, 131072, 196638, 0, 131072, 196639, 0, 1, 262144, 0, 1, 262145, 0, 131072, 262174, 0, 131072, 262175, 0, 1, 327680, 0, 1, 327681, 0, 131072, 327710, 0, 131072, 327711, 0, 1, 393216, 0, 1, 393217, 0, 131072, 393246, 0, 131072, 393247, 0, 1, 458752, 0, 1, 458753, 0, 131073, 458761, 0, 65536, 458762, 0, 65536, 458763, 0, 65536, 458764, 0, 65536, 458765, 0, 65536, 458766, 0, 65536, 458767, 0, 65536, 458768, 0, 65536, 458769, 0, 65536, 458770, 0, 65536, 458771, 0, 65536, 458772, 0, 65536, 458773, 0, 65536, 458774, 0, 65536, 458782, 0, 131073, 458783, 0, 1, 524288, 0, 1, 524289, 0, 131072, 524318, 0, 131072, 524319, 0, 1, 589824, 0, 1, 589825, 0, 131072, 589854, 0, 131072, 589855, 0, 1, 655360, 0, 1, 655361, 0, 131072, 655362, 0, 65536, 655363, 0, 65536, 655364, 0, 65536, 655365, 0, 65536, 655366, 0, 65536, 655367, 0, 65536, 655368, 0, 65536, 655383, 0, 65536, 655384, 0, 65536, 655385, 0, 65536, 655386, 0, 65536, 655387, 0, 65536, 655388, 0, 65536, 655389, 0, 65536, 655390, 0, 131072, 655391, 0, 1, 720896, 0, 1, 720897, 0, 131072, 720926, 0, 131072, 720927, 0, 1, 786432, 0, 1, 786433, 0, 131072, 786462, 0, 131072, 786463, 0, 1, 851968, 0, 1, 851969, 0, 131072, 851977, 0, 65536, 851978, 0, 65536, 851979, 0, 65536, 851980, 0, 65536, 851981, 0, 65536, 851982, 0, 65536, 851983, 0, 65536, 851984, 0, 65536, 851985, 0, 65536, 851986, 0, 65536, 851987, 0, 65536, 851988, 0, 65536, 851989, 0, 65536, 851990, 0, 65536, 851998, 0, 131072, 851999, 0, 1, 917504, 0, 1, 917505, 0, 131072, 917534, 0, 131072, 917535, 0, 1, 983040, 0, 1, 983041, 0, 131073, 983070, 0, 131073, 983071, 0, 1, 1048576, 0, 0, 1048577, 0, 1, 1048578, 0, 2, 1048579, 0, 0, 1048580, 0, 1, 1048581, 0, 2, 1048582, 0, 0, 1048583, 0, 1, 1048584, 0, 2, 1048599, 0, 2, 1048600, 0, 1, 1048601, 0, 0, 1048602, 0, 2, 1048603, 0, 1, 1048604, 0, 0, 1048605, 0, 2, 1048606, 0, 1, 1048607, 0, 0, 1114112, 0, 65537, 1114113, 0, 65538, 1114114, 0, 65538, 1114115, 0, 65537, 1114116, 0, 65538, 1114117, 0, 65538, 1114118, 0, 65537, 1114119, 0, 65538, 1114120, 0, 65538, 1114121, 0, 65537, 1114122, 0, 65538, 1114123, 0, 65538, 1114124, 0, 65537, 1114125, 0, 65538, 1114130, 0, 65538, 1114131, 0, 65537, 1114132, 0, 65538, 1114133, 0, 65538, 1114134, 0, 65537, 1114135, 0, 65538, 1114136, 0, 65538, 1114137, 0, 65537, 1114138, 0, 65538, 1114139, 0, 65538, 1114140, 0, 65537, 1114141, 0, 65538, 1114142, 0, 65538, 1114143, 0, 65537, 1179648, 0, 65538, 1179649, 0, 65537, 1179650, 0, 65538, 1179651, 0, 65538, 1179652, 0, 65537, 1179653, 0, 65538, 1179654, 0, 65538, 1179655, 0, 65537, 1179656, 0, 65538, 1179657, 0, 65538, 1179658, 0, 65537, 1179659, 0, 65538, 1179660, 0, 65538, 1179661, 0, 65537, 1179666, 0, 65537, 1179667, 0, 65538, 1179668, 0, 65538, 1179669, 0, 65537, 1179670, 0, 65538, 1179671, 0, 65538, 1179672, 0, 65537, 1179673, 0, 65538, 1179674, 0, 65538, 1179675, 0, 65537, 1179676, 0, 65538, 1179677, 0, 65538, 1179678, 0, 65537, 1179679, 0, 65538 )
+
+[node name="CrateMasterSpawner" type="Node2D" parent="."]
+script = ExtResource( 22 )
+crate = ExtResource( 18 )
+
+[node name="CrateSpawner" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 512, 216 )
+spawn_width = 450.0
+
+[node name="CrateSpawner3" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 512, 408 )
+spawn_width = 450.0
+
+[node name="CrateSpawner2" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 176, 312 )
+spawn_width = 220.0
+
+[node name="CrateSpawner4" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 848, 312 )
+spawn_width = 220.0
+
+[node name="CrateSpawner5" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 848, 504 )
+spawn_width = 220.0
+
+[node name="CrateSpawner6" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 176, 504 )
+spawn_width = 220.0
+
+[node name="CrateSpawner7" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 368, 536 )
+spawn_width = 150.0
+
+[node name="CrateSpawner8" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+position = Vector2( 656, 536 )
+spawn_width = 150.0
+
+[node name="MonsterSpawner" type="Node2D" parent="."]
+position = Vector2( 512, -24 )
+script = ExtResource( 23 )
+big_monster_scene = ExtResource( 17 )
+small_monster_scene = ExtResource( 16 )
+
+[node name="Timer" type="Timer" parent="MonsterSpawner"]
+autostart = true
+[connection signal="timeout" from="MonsterSpawner/Timer" to="MonsterSpawner" method="_on_Timer_timeout"]
