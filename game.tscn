@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://sprites/player/spr_player_idle_1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/spr_player_idle_2.png" type="Texture" id=2]
@@ -26,8 +26,10 @@
 [ext_resource path="res://scripts/PlayerData.gd" type="Script" id=24]
 [ext_resource path="res://scripts/ScoreLabel.gd" type="Script" id=25]
 [ext_resource path="res://prefabs/PlayerDead.scn" type="PackedScene" id=26]
-[ext_resource path="res://sprites/spr_bullet1_1.png" type="Texture" id=27]
-[ext_resource path="res://scripts/Bullet.gd" type="Script" id=28]
+[ext_resource path="res://prefabs/Bullet.scn" type="PackedScene" id=27]
+[ext_resource path="res://scripts/Pistol.gd" type="Script" id=28]
+[ext_resource path="res://scripts/Shotgun.gd" type="Script" id=29]
+[ext_resource path="res://scripts/DualPistol.gd" type="Script" id=30]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -50,9 +52,6 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 15.9869, 11.0629 )
 
-[sub_resource type="CircleShape2D" id=3]
-radius = 4.90829
-
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 19 )
 
@@ -66,12 +65,14 @@ __meta__ = {
 [node name="ScoreLabel" type="Label" parent="GUI"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -16.0
-margin_top = 48.0
-margin_right = 24.0
-margin_bottom = 62.0
+margin_top = 50.8137
+margin_right = 27.0
+margin_bottom = 64.8137
 text = "0"
 script = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PlayerData" type="Node2D" parent="."]
 script = ExtResource( 24 )
@@ -84,22 +85,47 @@ __meta__ = {
 "_edit_group_": true
 }
 dead_player = ExtResource( 26 )
+weapon_paths = [ NodePath("Weapons/Pistol"), NodePath("Weapons/Shotgun"), NodePath("Weapons/DualPistol") ]
+current_weapon_index = 1
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2( 0, 5 )
 shape = SubResource( 2 )
 
-[node name="FireHole1" type="Node2D" parent="Player"]
+[node name="FireHoleRight" type="Node2D" parent="Player"]
 position = Vector2( 16, 8 )
 
-[node name="FireHole2" type="Node2D" parent="Player"]
+[node name="FireHoleLeft" type="Node2D" parent="Player"]
 position = Vector2( -16, 8 )
+
+[node name="Weapons" type="Node2D" parent="Player"]
+
+[node name="Pistol" type="Node2D" parent="Player/Weapons"]
+script = ExtResource( 28 )
+bullet = ExtResource( 27 )
+player_path = NodePath("../..")
+left_firehole_path = NodePath("../../FireHoleLeft")
+right_firehole_path = NodePath("../../FireHoleRight")
+
+[node name="DualPistol" type="Node2D" parent="Player/Weapons"]
+script = ExtResource( 30 )
+bullet = ExtResource( 27 )
+player_path = NodePath("../..")
+left_firehole_path = NodePath("../../FireHoleLeft")
+right_firehole_path = NodePath("../../FireHoleRight")
+
+[node name="Shotgun" type="Node2D" parent="Player/Weapons"]
+script = ExtResource( 29 )
+bullet = ExtResource( 27 )
+player_path = NodePath("../..")
+left_firehole_path = NodePath("../../FireHoleLeft")
+right_firehole_path = NodePath("../../FireHoleRight")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 511.474, 288.69 )
@@ -162,20 +188,4 @@ small_monster_scene = ExtResource( 16 )
 [node name="Timer" type="Timer" parent="MonsterSpawner"]
 wait_time = 4.0
 autostart = true
-
-[node name="Bullet" type="Area2D" parent="."]
-position = Vector2( 344, 112 )
-collision_layer = 16
-collision_mask = 10
-script = ExtResource( 28 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet"]
-shape = SubResource( 3 )
-
-[node name="sprite" type="Sprite" parent="Bullet"]
-texture = ExtResource( 27 )
 [connection signal="timeout" from="MonsterSpawner/Timer" to="MonsterSpawner" method="_on_Timer_timeout"]
-[connection signal="body_entered" from="Bullet" to="Bullet" method="_on_Bullet_body_entered"]

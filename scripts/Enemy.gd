@@ -5,6 +5,8 @@ enum MOVEMENT_SIDE{
 	left
 }
 
+export(float) var health = 100.0
+
 var animated_sprite
 var movement = Vector2(0.0, 0.0)
 var movement_side
@@ -35,6 +37,19 @@ func _physics_process(delta):
 	if is_on_wall():
 		change_movement_side()
 	movement.x = movement_speed
-	
-
 	movement = self.move_and_slide(movement, Vector2(0.0, -1.0))
+#	var collision: = move_and_collide(movement * delta)
+#	if collision:
+#		movement = movement.slide(collision.normal)
+#		if collision.get_collider().has_method("die"):
+#			collision.get_collider().die()
+	
+func damage(points: float):
+	health -= points
+	if health < 0.0:
+		queue_free()
+
+
+func _on_Area2D_body_entered(body):
+	if body.has_method("die"):
+		body.die()
