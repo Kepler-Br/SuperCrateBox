@@ -32,7 +32,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 26.8336, 24.219 )
+extents = Vector2( 23.0082, 22.2028 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 30.4037, 27.5112 )
@@ -48,16 +48,16 @@ position = Vector2( 0, 7 )
 scale = Vector2( 0.9, 0.9 )
 frames = SubResource( 1 )
 animation = "walk"
-frame = 6
+frame = 5
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 3, 8 )
+position = Vector2( 2.75581, 9.46515 )
 shape = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 3.05238, 8.18039 )
+position = Vector2( 2.8082, 9.52343 )
 shape = SubResource( 3 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
