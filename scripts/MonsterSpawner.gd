@@ -2,9 +2,22 @@ extends Node2D
 
 export (PackedScene) var big_monster_scene
 export (PackedScene) var small_monster_scene
+export (PackedScene) var big_monster_angry_scene
+export (PackedScene) var small_monster_angry_scene
+
+onready var root_node: = get_node("/root/Node2D")
 
 func _ready():
 	randomize()
+
+func spawn_angry(is_big: bool):
+	var monster
+	if is_big:
+		monster = big_monster_angry_scene.instance()
+	else:
+		monster = small_monster_angry_scene.instance()
+	root_node.add_child(monster)
+	monster.position = position
 
 func pick_monster():
 	var monster_number = randf()

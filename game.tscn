@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://sprites/player/spr_player_idle_1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/spr_player_idle_2.png" type="Texture" id=2]
@@ -32,6 +32,8 @@
 [ext_resource path="res://scripts/DualPistol.gd" type="Script" id=30]
 [ext_resource path="res://scripts/Minigun.gd" type="Script" id=31]
 [ext_resource path="res://scripts/DeadlyPit.gd" type="Script" id=32]
+[ext_resource path="res://prefabs/EnemySmallAngry.scn" type="PackedScene" id=33]
+[ext_resource path="res://prefabs/EnemyBigAngry.tscn" type="PackedScene" id=34]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -203,6 +205,8 @@ position = Vector2( 512, -24 )
 script = ExtResource( 23 )
 big_monster_scene = ExtResource( 17 )
 small_monster_scene = ExtResource( 16 )
+big_monster_angry_scene = ExtResource( 34 )
+small_monster_angry_scene = ExtResource( 33 )
 
 [node name="Timer" type="Timer" parent="MonsterSpawner"]
 wait_time = 4.0
