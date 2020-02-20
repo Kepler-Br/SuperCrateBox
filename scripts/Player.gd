@@ -69,7 +69,7 @@ func _physics_process(delta: float) -> void:
 	is_jump_interrupted = false
 	velocity = calculace_velocity(velocity, get_direction(), speed, is_jump_interrupted)
 	velocity = move_and_slide(velocity, floor_normal)
-	if Input.is_action_just_pressed("fire"):
+	if Input.is_action_pressed("fire"):
 		weapon_node.fire(!animated_sprite.flip_h)
 
 func die() -> void:
