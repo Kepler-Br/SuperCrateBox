@@ -6,6 +6,7 @@ enum MOVEMENT_SIDE{
 }
 
 export(float) var health = 100.0
+export(bool) var is_big = true
 
 var animated_sprite
 var movement = Vector2(0.0, 0.0)
@@ -14,7 +15,7 @@ var movement_speed
 
 const GRAVITY = 20.0
 const MAX_ACCELERATION = 550.0
-const SIDE_MOVEMENT_SPEED = 100.0
+export(float) var SIDE_MOVEMENT_SPEED = 100.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -49,6 +50,9 @@ func damage(points: float):
 	if health < 0.0:
 		queue_free()
 
+func make_angry():
+	get_node("/root/Node2D/MonsterSpawner/").spawn_angry(is_big)
+	queue_free()
 
 func _on_Area2D_body_entered(body):
 	if body.has_method("die"):
