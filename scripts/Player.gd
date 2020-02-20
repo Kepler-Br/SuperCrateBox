@@ -1,14 +1,30 @@
 extends KinematicBody2D
 
-onready var animated_sprite: = get_node("./AnimatedSprite")
-
 export var gravity: = 1800.0
 export var speed: = Vector2(300.0, 650.0)
 export(PackedScene) var dead_player
+export(Array, NodePath) var weapon_paths: Array
+export(int) var current_weapon_index
+
+onready var animated_sprite: = get_node("./AnimatedSprite")
+onready var root_node: Node2D = get_node("/root/Node2D/")
+onready var player_data: Node2D = get_node("/root/Node2D/PlayerData/")
 
 var velocity: = Vector2.ZERO
+var weapon_node: Node2D
 
 const floor_normal: = Vector2.UP
+
+func _ready():
+	weapon_node = get_node(weapon_paths[current_weapon_index])
+	player_data.connect("score_changed", self, "_on_crate_pickup")
+
+func _on_crate_pickup():
+	var new_weapon_index = randi()%len(weapon_paths)
+	while new_weapon_index == current_weapon_index:
+		new_weapon_index = randi()%len(weapon_paths)
+	current_weapon_index = new_weapon_index
+	weapon_node = get_node(weapon_paths[current_weapon_index])
 
 func _set_animation() -> void:
 	if Input.is_action_pressed("move_right") and is_on_floor():
@@ -49,10 +65,14 @@ func calculace_velocity(
 func _physics_process(delta: float) -> void:
 	_set_animation()
 	var is_jump_interrupted: = Input.is_action_just_released("jump") and velocity.y < 0.0
+	# REMOVE THIS IF NEEDED
+	is_jump_interrupted = false
 	velocity = calculace_velocity(velocity, get_direction(), speed, is_jump_interrupted)
 	velocity = move_and_slide(velocity, floor_normal)
 	if Input.is_action_just_pressed("fire"):
-		var dead_player_node = dead_player.instance()
-		dead_player_node.position = position
-		get_node("/root/Node2D/").add_child(dead_player_node)
+		weapon_node.fire(!animated_sprite.flip_h)
 
+func die() -> void:
+	var new_dead_player = dead_player.instance()
+	new_dead_player.position = position
+	root_node.add_child(new_dead_player)
