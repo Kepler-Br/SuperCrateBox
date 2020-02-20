@@ -4,6 +4,7 @@ onready var animated_sprite: = get_node("./AnimatedSprite")
 
 export var gravity: = 1800.0
 export var speed: = Vector2(300.0, 650.0)
+export(PackedScene) var dead_player
 
 var velocity: = Vector2.ZERO
 
@@ -50,4 +51,8 @@ func _physics_process(delta: float) -> void:
 	var is_jump_interrupted: = Input.is_action_just_released("jump") and velocity.y < 0.0
 	velocity = calculace_velocity(velocity, get_direction(), speed, is_jump_interrupted)
 	velocity = move_and_slide(velocity, floor_normal)
+	if Input.is_action_just_pressed("fire"):
+		var dead_player_node = dead_player.instance()
+		dead_player_node.position = position
+		get_node("/root/Node2D/").add_child(dead_player_node)
 
