@@ -2,8 +2,9 @@ extends Node2D
 
 onready var root_node: = get_node("/root/Node2D/")
 onready var spawn_areas: = get_children()
+onready var player_data: = get_node("/root/Node2D/PlayerData/")
 export (PackedScene) var crate
-var new_crate
+var new_crate: Crate
 
 func _ready():
 	randomize()
@@ -31,4 +32,5 @@ func _on_Node2D_ready():
 	relocate_crate()
 
 func _on_crate_pickup():
+	player_data.score += 1
 	relocate_crate()

@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "Crate",
+"language": "GDScript",
+"path": "res://scripts/Crate.gd"
+}, {
 "base": "Node2D",
 "class": "CrateSpawner",
 "language": "GDScript",
 "path": "res://scripts/CrateSpawner.gd"
 } ]
 _global_script_class_icons={
+"Crate": "",
 "CrateSpawner": ""
 }
 
@@ -57,6 +63,7 @@ fire={
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Pickup"
 2d_physics/layer_4="World"
+2d_physics/layer_5="Bullets"
 
 [rendering]
 

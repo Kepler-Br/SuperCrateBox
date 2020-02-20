@@ -1,5 +1,5 @@
+class_name Crate
 extends Area2D
-
 
 signal picked_up
 

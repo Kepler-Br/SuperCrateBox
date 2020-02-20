@@ -18,7 +18,7 @@
 [ext_resource path="res://sprites/enemy_big/spr_Enemy2_7.png" type="Texture" id=16]
 [ext_resource path="res://sprites/enemy_big/spr_Enemy2_0.png" type="Texture" id=17]
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 17 ), ExtResource( 5 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 7 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 16 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 3 ) ],
 "loop": true,
@@ -31,11 +31,10 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 26.8336, 24.219 )
 
 [node name="EnemyBig" type="KinematicBody2D"]
-position = Vector2( 428.39, 107.554 )
 collision_layer = 2
 collision_mask = 9
 script = ExtResource( 1 )
@@ -46,11 +45,11 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 7 )
 scale = Vector2( 0.9, 0.9 )
-frames = SubResource( 5 )
+frames = SubResource( 1 )
 animation = "walk"
-frame = 4
+frame = 8
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 3, 8 )
-shape = SubResource( 6 )
+shape = SubResource( 2 )
