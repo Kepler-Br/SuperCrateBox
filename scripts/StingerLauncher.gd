@@ -26,9 +26,9 @@ func _spawn_bullet(direction_right: bool):
 	new_bullet.position = firehole.position + player.position;
 	new_bullet.despawn_time = life_time
 	if direction_right:
-		new_bullet.speed = Vector2(500.0, 0.0)
+		new_bullet.speed = Vector2(600.0, 0.0)
 	else:
-		new_bullet.speed = Vector2(-500.0, 0.0)
+		new_bullet.speed = Vector2(-600.0, 0.0)
 
 func fire(direction_right: bool):
 	if not timer.is_stopped():

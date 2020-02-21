@@ -111,7 +111,7 @@ current_weapon_index = 5
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -184,6 +184,7 @@ bullet = ExtResource( 43 )
 player_path = NodePath("../..")
 left_firehole_path = NodePath("../../FireHoleLeft")
 right_firehole_path = NodePath("../../FireHoleRight")
+reload_time = 0.1
 life_time = 5.0
 
 [node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/StingerLauncher"]
