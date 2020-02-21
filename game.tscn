@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://sprites/player/spr_player_idle_1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/spr_player_idle_2.png" type="Texture" id=2]
@@ -34,6 +34,11 @@
 [ext_resource path="res://scripts/DeadlyPit.gd" type="Script" id=32]
 [ext_resource path="res://prefabs/EnemySmallAngry.scn" type="PackedScene" id=33]
 [ext_resource path="res://prefabs/EnemyBigAngry.tscn" type="PackedScene" id=34]
+[ext_resource path="res://sound/snd_jump.wav" type="AudioStream" id=35]
+[ext_resource path="res://sound/snd_pickup.wav" type="AudioStream" id=36]
+[ext_resource path="res://sound/snd_gun1.wav" type="AudioStream" id=37]
+[ext_resource path="res://sound/snd_shotgun.wav" type="AudioStream" id=38]
+[ext_resource path="res://sound/snd_gun2.wav" type="AudioStream" id=39]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -98,7 +103,7 @@ current_weapon_index = 3
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -120,6 +125,9 @@ player_path = NodePath("../..")
 left_firehole_path = NodePath("../../FireHoleLeft")
 right_firehole_path = NodePath("../../FireHoleRight")
 
+[node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/Pistol"]
+stream = ExtResource( 37 )
+
 [node name="Minigun" type="Node2D" parent="Player/Weapons"]
 script = ExtResource( 31 )
 bullet = ExtResource( 27 )
@@ -127,12 +135,19 @@ player_path = NodePath("../..")
 left_firehole_path = NodePath("../../FireHoleLeft")
 right_firehole_path = NodePath("../../FireHoleRight")
 
+[node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/Minigun"]
+stream = ExtResource( 39 )
+
 [node name="DualPistol" type="Node2D" parent="Player/Weapons"]
 script = ExtResource( 30 )
 bullet = ExtResource( 27 )
 player_path = NodePath("../..")
 left_firehole_path = NodePath("../../FireHoleLeft")
 right_firehole_path = NodePath("../../FireHoleRight")
+reload_time = 0.3
+
+[node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/DualPistol"]
+stream = ExtResource( 37 )
 
 [node name="Shotgun" type="Node2D" parent="Player/Weapons"]
 script = ExtResource( 29 )
@@ -140,6 +155,12 @@ bullet = ExtResource( 27 )
 player_path = NodePath("../..")
 left_firehole_path = NodePath("../../FireHoleLeft")
 right_firehole_path = NodePath("../../FireHoleRight")
+
+[node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/Shotgun"]
+stream = ExtResource( 38 )
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource( 35 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 511.474, 288.69 )
@@ -157,6 +178,7 @@ shape = SubResource( 3 )
 position = Vector2( 456, 576 )
 
 [node name="TileMap" type="TileMap" parent="."]
+z_index = -1
 tile_set = ExtResource( 13 )
 cell_size = Vector2( 32, 32 )
 collision_layer = 8
@@ -168,37 +190,42 @@ tile_data = PoolIntArray( -65536, 0, 1, -65535, 0, 131072, -65506, 0, 131072, -6
 script = ExtResource( 22 )
 crate = ExtResource( 18 )
 
-[node name="CrateSpawner" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="Spawners" type="Node2D" parent="CrateMasterSpawner"]
+
+[node name="CrateSpawner" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 512, 216 )
 spawn_width = 450.0
 
-[node name="CrateSpawner3" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="CrateSpawner3" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 512, 408 )
 spawn_width = 450.0
 
-[node name="CrateSpawner2" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="CrateSpawner2" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 176, 312 )
 spawn_width = 220.0
 
-[node name="CrateSpawner4" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="CrateSpawner4" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 848, 312 )
 spawn_width = 220.0
 
-[node name="CrateSpawner5" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="CrateSpawner5" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 848, 504 )
 spawn_width = 220.0
 
-[node name="CrateSpawner6" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="CrateSpawner6" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 176, 504 )
 spawn_width = 220.0
 
-[node name="CrateSpawner7" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="CrateSpawner7" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 368, 536 )
 spawn_width = 150.0
 
-[node name="CrateSpawner8" parent="CrateMasterSpawner" instance=ExtResource( 21 )]
+[node name="CrateSpawner8" parent="CrateMasterSpawner/Spawners" instance=ExtResource( 21 )]
 position = Vector2( 656, 536 )
 spawn_width = 150.0
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="CrateMasterSpawner"]
+stream = ExtResource( 36 )
 
 [node name="MonsterSpawner" type="Node2D" parent="."]
 position = Vector2( 512, -24 )

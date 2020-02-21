@@ -5,8 +5,11 @@ enum MOVEMENT_SIDE{
 	left
 }
 
+onready var rood_node = get_node("/root/Node2D/")
+
 export(float) var health = 100.0
 export(bool) var is_big = true
+export(PackedScene) var dead_prefab: PackedScene
 
 var animated_sprite
 var movement = Vector2(0.0, 0.0)
@@ -45,9 +48,15 @@ func _physics_process(delta):
 #		if collision.get_collider().has_method("die"):
 #			collision.get_collider().die()
 	
+func spawn_dead_body():
+	var dead = dead_prefab.instance()
+	rood_node.add_child(dead)
+	dead.position = position
+	
 func damage(points: float):
 	health -= points
 	if health < 0.0:
+		spawn_dead_body()
 		queue_free()
 
 func make_angry():

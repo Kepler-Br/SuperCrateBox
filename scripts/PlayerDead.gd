@@ -12,6 +12,5 @@ func _on_timer_timeout():
 
 func _physics_process(delta):
 	velocity.y = min(velocity.y + gravity*delta, 700.0)
-	
 	self.position += velocity*delta
 	

@@ -1,8 +1,9 @@
 extends Node2D
 
 onready var root_node: = get_node("/root/Node2D/")
-onready var spawn_areas: = get_children()
+onready var spawn_areas: = get_node("Spawners").get_children()
 onready var player_data: = get_node("/root/Node2D/PlayerData/")
+onready var pickup_sound: = get_node("PickupSound")
 export (PackedScene) var crate
 var new_crate: Crate
 
@@ -33,4 +34,5 @@ func _on_Node2D_ready():
 
 func _on_crate_pickup():
 	player_data.score += 1
+	pickup_sound.play()
 	relocate_crate()
