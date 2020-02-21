@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://sprites/enemy_big/spr_AngryEnemy2_2.png" type="Texture" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://sprites/enemy_big/spr_AngryEnemy2_5.png" type="Texture" id=21]
 [ext_resource path="res://sprites/enemy_big/spr_AngryEnemy2_10.png" type="Texture" id=22]
 [ext_resource path="res://sprites/enemy_big/spr_AngryEnemy2_0.png" type="Texture" id=23]
+[ext_resource path="res://prefabs/EnemyBigDead.tscn" type="PackedScene" id=24]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -48,13 +49,14 @@ collision_layer = 2
 collision_mask = 25
 script = ExtResource( 1 )
 health = 600.0
+dead_prefab = ExtResource( 24 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 7 )
 scale = Vector2( 0.9, 0.9 )
 frames = SubResource( 1 )
 animation = "walk"
-frame = 3
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://sprites/player/spr_player_idle_1.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player/spr_player_idle_2.png" type="Texture" id=2]
@@ -39,6 +39,10 @@
 [ext_resource path="res://sound/snd_gun1.wav" type="AudioStream" id=37]
 [ext_resource path="res://sound/snd_shotgun.wav" type="AudioStream" id=38]
 [ext_resource path="res://sound/snd_gun2.wav" type="AudioStream" id=39]
+[ext_resource path="res://scripts/RocketLauncher.gd" type="Script" id=40]
+[ext_resource path="res://prefabs/Rocket.scn" type="PackedScene" id=41]
+[ext_resource path="res://scripts/StingerLauncher.gd" type="Script" id=42]
+[ext_resource path="res://prefabs/Stinger.scn" type="PackedScene" id=43]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -61,11 +65,14 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 15.9869, 11.0629 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 64, 16 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 19 )
+
+[node name="Bullet" parent="." instance=ExtResource( 27 )]
+position = Vector2( 376, 120 )
 
 [node name="GUI" type="Control" parent="."]
 margin_right = 1024.0
@@ -77,9 +84,10 @@ __meta__ = {
 [node name="ScoreLabel" type="Label" parent="GUI"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_top = 50.8137
-margin_right = 27.0
-margin_bottom = 64.8137
+margin_left = -8.0
+margin_top = 48.0
+margin_right = 19.0
+margin_bottom = 62.0
 text = "0"
 script = ExtResource( 25 )
 __meta__ = {
@@ -97,13 +105,13 @@ __meta__ = {
 "_edit_group_": true
 }
 dead_player = ExtResource( 26 )
-weapon_paths = [ NodePath("Weapons/Pistol"), NodePath("Weapons/Shotgun"), NodePath("Weapons/DualPistol"), NodePath("Weapons/Minigun") ]
-current_weapon_index = 3
+weapon_paths = [ NodePath("Weapons/Pistol"), NodePath("Weapons/Shotgun"), NodePath("Weapons/DualPistol"), NodePath("Weapons/Minigun"), NodePath("Weapons/RocketLauncher"), NodePath("Weapons/StingerLauncher") ]
+current_weapon_index = 5
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -159,6 +167,28 @@ right_firehole_path = NodePath("../../FireHoleRight")
 [node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/Shotgun"]
 stream = ExtResource( 38 )
 
+[node name="RocketLauncher" type="Node2D" parent="Player/Weapons"]
+script = ExtResource( 40 )
+bullet = ExtResource( 41 )
+player_path = NodePath("../..")
+left_firehole_path = NodePath("../../FireHoleLeft")
+right_firehole_path = NodePath("../../FireHoleRight")
+life_time = 2.5
+
+[node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/RocketLauncher"]
+stream = ExtResource( 38 )
+
+[node name="StingerLauncher" type="Node2D" parent="Player/Weapons"]
+script = ExtResource( 42 )
+bullet = ExtResource( 43 )
+player_path = NodePath("../..")
+left_firehole_path = NodePath("../../FireHoleLeft")
+right_firehole_path = NodePath("../../FireHoleRight")
+life_time = 5.0
+
+[node name="FireSound" type="AudioStreamPlayer" parent="Player/Weapons/StingerLauncher"]
+stream = ExtResource( 38 )
+
 [node name="JumpSound" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource( 35 )
 
@@ -172,7 +202,7 @@ position = Vector2( 512, 600 )
 script = ExtResource( 32 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeadlyPit"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Fire" parent="." instance=ExtResource( 15 )]
 position = Vector2( 456, 576 )
@@ -236,7 +266,7 @@ big_monster_angry_scene = ExtResource( 34 )
 small_monster_angry_scene = ExtResource( 33 )
 
 [node name="Timer" type="Timer" parent="MonsterSpawner"]
-wait_time = 4.0
+wait_time = 2.0
 autostart = true
 [connection signal="body_entered" from="DeadlyPit" to="DeadlyPit" method="_on_DeadlyPit_body_entered"]
 [connection signal="timeout" from="MonsterSpawner/Timer" to="MonsterSpawner" method="_on_Timer_timeout"]

@@ -32,11 +32,16 @@
 [ext_resource path="res://sprites/enemy_small/spr_Enemy_dead_2.png" type="Texture" id=30]
 [ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_dead_2.png" type="Texture" id=31]
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 30 ), ExtResource( 26 ) ],
 "loop": true,
 "name": "dead",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 31 ), ExtResource( 27 ) ],
+"loop": true,
+"name": "dead_angry",
 "speed": 8.0
 }, {
 "frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ) ],
@@ -48,23 +53,16 @@ animations = [ {
 "loop": true,
 "name": "walk_angry",
 "speed": 8.0
-}, {
-"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 31 ), ExtResource( 27 ) ],
-"loop": true,
-"name": "dead_angry",
-"speed": 5.0
 } ]
 
 [node name="EnemySmallDead" type="Node2D"]
-position = Vector2( 336, 120 )
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 7 )
 scale = Vector2( 0.65, 0.65 )
-frames = SubResource( 6 )
+frames = SubResource( 1 )
 animation = "dead"
-frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
