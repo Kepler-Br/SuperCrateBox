@@ -9,6 +9,7 @@ export(int) var current_weapon_index
 onready var animated_sprite: = get_node("./AnimatedSprite")
 onready var root_node: Node2D = get_node("/root/Node2D/")
 onready var player_data: Node2D = get_node("/root/Node2D/PlayerData/")
+onready var jump_sound: AudioStreamPlayer = get_node("JumpSound")
 
 var velocity: = Vector2.ZERO
 var weapon_node: Node2D
@@ -67,6 +68,8 @@ func _physics_process(delta: float) -> void:
 	var is_jump_interrupted: = Input.is_action_just_released("jump") and velocity.y < 0.0
 	# REMOVE THIS IF NEEDED
 	is_jump_interrupted = false
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		jump_sound.play()
 	velocity = calculace_velocity(velocity, get_direction(), speed, is_jump_interrupted)
 	velocity = move_and_slide(velocity, floor_normal)
 	if Input.is_action_pressed("fire"):

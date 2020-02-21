@@ -12,6 +12,7 @@ onready var left_firehole: Node2D = get_node(left_firehole_path)
 onready var right_firehole: Node2D = get_node(right_firehole_path)
 onready var root_node: Node2D = get_node("/root/Node2D/")
 onready var timer: Timer = Timer.new()
+onready var fire_sound: AudioStreamPlayer = get_node("FireSound")
 
 func _ready():
 	timer.one_shot = true
@@ -33,4 +34,5 @@ func fire(direction_right: bool):
 	if not timer.is_stopped():
 		return
 	_spawn_bullet(direction_right)
+	fire_sound.play()
 	timer.start()

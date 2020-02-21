@@ -28,5 +28,5 @@ func pick_monster():
 
 func _on_Timer_timeout():
 	var monster = pick_monster()
-	monster.position = Vector2(0.0, 0.0)
-	add_child(monster)
+	monster.position = position
+	root_node.add_child(monster)

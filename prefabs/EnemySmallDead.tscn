@@ -1,0 +1,70 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://scripts/PlayerDead.gd" type="Script" id=1]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_0.png" type="Texture" id=2]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_3.png" type="Texture" id=3]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_1.png" type="Texture" id=4]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_4.png" type="Texture" id=5]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_2.png" type="Texture" id=6]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_6.png" type="Texture" id=7]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_5.png" type="Texture" id=8]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_8.png" type="Texture" id=9]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_7.png" type="Texture" id=10]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_9.png" type="Texture" id=11]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_10.png" type="Texture" id=12]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_0.png" type="Texture" id=13]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_1.png" type="Texture" id=14]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_2.png" type="Texture" id=15]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_3.png" type="Texture" id=16]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_4.png" type="Texture" id=17]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_5.png" type="Texture" id=18]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_8.png" type="Texture" id=19]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_6.png" type="Texture" id=20]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_7.png" type="Texture" id=21]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_10.png" type="Texture" id=22]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_9.png" type="Texture" id=23]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_dead_0.png" type="Texture" id=24]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_dead_1.png" type="Texture" id=25]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_dead_3.png" type="Texture" id=26]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_dead_3.png" type="Texture" id=27]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_dead_1.png" type="Texture" id=28]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_dead_0.png" type="Texture" id=29]
+[ext_resource path="res://sprites/enemy_small/spr_Enemy_dead_2.png" type="Texture" id=30]
+[ext_resource path="res://sprites/enemy_small/spr_AngryEnemy_dead_2.png" type="Texture" id=31]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 30 ), ExtResource( 26 ) ],
+"loop": true,
+"name": "dead",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "walk",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 23 ), ExtResource( 22 ) ],
+"loop": true,
+"name": "walk_angry",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 29 ), ExtResource( 28 ), ExtResource( 31 ), ExtResource( 27 ) ],
+"loop": true,
+"name": "dead_angry",
+"speed": 5.0
+} ]
+
+[node name="EnemySmallDead" type="Node2D"]
+position = Vector2( 336, 120 )
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 7 )
+scale = Vector2( 0.65, 0.65 )
+frames = SubResource( 6 )
+animation = "dead"
+frame = 1
+playing = true
+
+[node name="Timer" type="Timer" parent="."]
